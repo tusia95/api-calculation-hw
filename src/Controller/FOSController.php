@@ -7,6 +7,7 @@ use App\Service\CalculationService;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
+
 class FOSController extends AbstractFOSRestController
 {
     /**

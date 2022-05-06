@@ -1,26 +1,27 @@
 <?php
-namespace App\Tests\Controller;
+namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class JsonControllerTest extends WebTestCase
 {
-    public function testQueryController(): void
+    public function testJsonController(): void
     {
 // This calls KernelTestCase::bootKernel(), and creates a
 // "client" that is acting as the browser
         $client = static::createClient();
 
 //// Request a specific page
-//        $crawler = $client->request('POST', '/api3/calculate', (json_decode(
-//            '{"action": "multiply",
-//            "firstNumber": "44",
-//            "secondNumber":"0.5"}'
-//        ), TRUE), array(), array('CONTENT_TYPE' => 'application/json'));
+        $crawler = $client->request('POST', '/api3/calculate',
+           [],[], ['CONTENT_TYPE' => 'application/json'],  json_encode([
+                'action' => 'add',
+                'firstNumber' => '5',
+                'secondNumber' => '9',
+            ], JSON_PRETTY_PRINT));
 
 // Validate a successful response and some content
         $this->assertResponseIsSuccessful();
-        $this->assertSame('{"result":88}', $client->getResponse()->getContent());
+        $this->assertJson('{ "result":14 }', $client->getResponse()->getContent());
 
     }
 }
